@@ -90,7 +90,7 @@ namespace AtividadPosParcial.Test.Productos
             var panPerro = new Producto(nombre: "Salchica", costo: 1000, ventaDirecta: false);
             var salchicha = new Producto(nombre: "PanPerro", costo: 1000, ventaDirecta: false);
             var laminadequeso = new Producto(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false);
-            int cantidadEntrada = 3;
+            int cantidadEntrada = 4;
             panPerro.EntradaProductos(producto: laminadequeso, cantidad: cantidadEntrada);
             salchicha.EntradaProductos(producto: panPerro, cantidad: cantidadEntrada);
             laminadequeso.EntradaProductos(producto: salchicha, cantidad: cantidadEntrada);
@@ -106,6 +106,7 @@ namespace AtividadPosParcial.Test.Productos
             List<Producto> ingredientes = new List<Producto>();
             ingredientes = productosPerro.CrearProductoCompuesto(productos, cantidades);
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, productos: ingredientes);
+
             int cantidadSalida = 3;
             string respuesta = perroSencillo.SalidadeProductosCompuesto(producto: perroSencillo, cantidad: cantidadSalida, huespede: huespede);
             #endregion
@@ -182,23 +183,34 @@ namespace AtividadPosParcial.Test.Productos
 
 
         }
-        public virtual void DisminuirCantidadProductoCompuesto(string nombre, int cantidad, int cantidadPedido)
+        public virtual int DisminuirCantidadProductoCompuesto(string nombre, int cantidad, int cantidadPedido)
         {
+            List<int> disminucionCorrecta = new List<int>();
             if (cantidad > 0 && cantidadPedido > 0)
             {
                 foreach (Producto producto in _productos)
                 {
                     if (producto.Nombre.Equals(nombre))
                     {
-                        if (producto.Cantidad >= cantidad)
+                        if (producto.Cantidad >= (cantidad * cantidadPedido))
                         {
                             producto.Cantidad -= (cantidad * cantidadPedido);
+                            disminucionCorrecta.Add(1);
+                        }
+                        else
+                        {
+                            disminucionCorrecta.Add(0);
                         }
 
                     }
                 }
             }
+            if (disminucionCorrecta.Where(x => x < 1).FirstOrDefault() == 0)
+            {
 
+                return 0;
+            }
+            return 1;
         }
     }
     internal class ProductoSimple : Producto
@@ -271,26 +283,35 @@ namespace AtividadPosParcial.Test.Productos
         {
             if (cantidad >= 0)
             {
-
-                for (int i = 0; i < producto.Productos.LongCount(); i++)
+                if (SalidadeProductos(producto.ProductosIngredientes, cantidad))
                 {
-                    SalidadeProductos(this.ProductosIngredientes);
+                    _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * cantidad));
+                    Cantidad = cantidad;
+                    return $"La utilidad de {Nombre} es de: {Utilidad:c2}";
                 }
-                _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * cantidad));
-                Cantidad = cantidad;
-                return $"La utilidad de {Nombre} es de: {Utilidad:c2}";
+                else
+                {
+                    return "No existe la Cantidad de productos suficientes para la venta";
+                }
+
             }
             throw new NotImplementedException();
         }
-        internal void SalidadeProductos(List<Producto> productosUtilizados)
+        internal bool SalidadeProductos(List<Producto> productosUtilizados, int cantidad)
         {
+            List<int> disminucionCorrecta = new List<int>();
 
             for (int i = 0; i < productosUtilizados.LongCount(); i++)
             {
-                DisminuirCantidadProductoCompuesto(productosUtilizados[i].Nombre, productosUtilizados[i].Cantidad, Cantidad);
+                disminucionCorrecta.Add(DisminuirCantidadProductoCompuesto(productosUtilizados[i].Nombre, productosUtilizados[i].Cantidad, cantidad));
 
             }
 
+            if (disminucionCorrecta.Where(x => x < 1).FirstOrDefault() == 0)
+            {
+                return false;
+            }
+            return true;
         }
 
     }
