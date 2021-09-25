@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AtividadPosParcial.Test.Productos
 {
@@ -51,18 +49,21 @@ namespace AtividadPosParcial.Test.Productos
 
             #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA DIRECTA,COMO SE TIENEN REGISTRADO 3 GASEOSAS 
             var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
+            var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000);
+            var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000);
             int cantidadEntrada = 3;
-
             producto.EntradaProductos(producto: producto, cantidad: cantidadEntrada);
+            yogur.EntradaProductos(producto: yogur, cantidad: cantidadEntrada);
+            agua.EntradaProductos(producto: agua, cantidad: cantidadEntrada);
             #endregion
-            #region CUANDO se solicited la venta de una gaseosa por parte de un huespede
+            #region CUANDO se solicited la venta de 2 gaseosa por parte de un huespede
             var huespede = 1055;
-            int cantidadSalida = 1;
+            int cantidadSalida = 2;
             string respuesta = producto.SalidadeProductosSimple(producto: producto, cantidad: cantidadSalida, huespede: huespede);
             #endregion
-            #region ENTONCES  el sistema registrara la salida del producto en el inventario y disminuira la cantidad del mismo 
+            #region ENTONCES  el sistema registrara la salida del producto en el inventario y disminuira la cantidad del mismo y mostrar un mensaje "Su Nueva cantidad de Gaseosa es de 1"
 
-            Assert.AreEqual("Su Nueva cantidad de Gaseosa es de 2", respuesta);
+            Assert.AreEqual("Su Nueva cantidad de Gaseosa es de 1", respuesta);
             #endregion
 
         }
@@ -98,16 +99,18 @@ namespace AtividadPosParcial.Test.Productos
             productos.Add(salchicha);
             productos.Add(laminadequeso);
             #endregion
-            #region CUANDO se solicited la venta de un perro Sencillo
+            #region CUANDO se solicited la venta de tres perro Sencillos
             var huespede = 1055;
-            var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, productos);
-            int cantidadSalida = 1;
             List<int> cantidades = new List<int>() { 1, 1, 1 };
-            var productosPerro = perroSencillo.CrearProductoCompuesto(productos, cantidades);
-            string respuesta = perroSencillo.SalidadeProductosCompuesto(producto: perroSencillo, cantidad: cantidadSalida, huespede: huespede, ingredientes: productosPerro);
+            var productosPerro = new ProductoCompuesto();
+            List<Producto> ingredientes = new List<Producto>();
+            ingredientes = productosPerro.CrearProductoCompuesto(productos, cantidades);
+            var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, productos: ingredientes);
+            int cantidadSalida = 3;
+            string respuesta = perroSencillo.SalidadeProductosCompuesto(producto: perroSencillo, cantidad: cantidadSalida, huespede: huespede);
             #endregion
-            #region ENTONCES la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente 
-            Assert.AreEqual($"Su Nueva cantidad de PerroSencillo es de 0", respuesta);
+            #region ENTONCES la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente y se mostrara el mensaje utilidad  La utilidad de PerroSencillo es de: $ 6.000,00
+            Assert.AreEqual($"La utilidad de PerroSencillo es de: $ 6.000,00", respuesta);
             #endregion
 
         }
@@ -126,43 +129,83 @@ namespace AtividadPosParcial.Test.Productos
         }
     }
 
-
-
     internal class Producto
     {
         public string Nombre { get; private set; }
         public decimal Costo { get; private set; }
         public bool VentaDirecta { get; private set; }
-        public int Cantida { get; set; }
-        protected List<VentaHuespede> _ventaHuespede;
+        public int Cantidad { get; set; }
+        private List<Producto> _productos { get; set; }
 
+        protected List<VentaHuespede> _ventaHuespede;
+        public Producto()
+        {
+        }
         public Producto(string nombre, decimal costo, bool ventaDirecta)
         {
             Nombre = nombre;
             Costo = costo;
             VentaDirecta = ventaDirecta;
+            _productos = new List<Producto>();
             _ventaHuespede = new List<VentaHuespede>();
 
         }
-
         public IReadOnlyCollection<VentaHuespede> VentaHuespedes => _ventaHuespede.AsReadOnly();
+        public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
         internal virtual string EntradaProductos(Producto producto, int cantidad)
         {
 
             if (cantidad >= 0)
             {
-                Cantida += cantidad;
-
-                return $"Su Nueva cantidad de {Nombre} es de {Cantida}";
+                Cantidad += cantidad;
+                _productos.Add(producto);
+                return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
             }
             throw new NotImplementedException();
+        }
+        public virtual void DisminuirCantidadProducto(string nombre, int cantidad)
+        {
+            if (cantidad > 0)
+            {
+                foreach (Producto producto in _productos)
+                {
+                    if (producto.Nombre.Equals(nombre))
+                    {
+                        if (producto.Cantidad >= cantidad)
+                        {
+                            producto.Cantidad -= cantidad;
+                        }
+
+                    }
+                }
+            }
+
+
+        }
+        public virtual void DisminuirCantidadProductoCompuesto(string nombre, int cantidad, int cantidadPedido)
+        {
+            if (cantidad > 0 && cantidadPedido > 0)
+            {
+                foreach (Producto producto in _productos)
+                {
+                    if (producto.Nombre.Equals(nombre))
+                    {
+                        if (producto.Cantidad >= cantidad)
+                        {
+                            producto.Cantidad -= (cantidad * cantidadPedido);
+                        }
+
+                    }
+                }
+            }
+
         }
     }
     internal class ProductoSimple : Producto
     {
 
         public decimal Precio { get; private set; }
-        public decimal Utilidad { get => Precio - Costo; }
+        public decimal Utilidad { get => Cantidad * (Precio - Costo); }
 
 
         public ProductoSimple(string nombre, decimal costo, decimal precio) : base(nombre, costo, true)
@@ -176,10 +219,9 @@ namespace AtividadPosParcial.Test.Productos
             if (cantidad >= 0)
             {
 
-                Cantida -= cantidad;
-
-                _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * Cantida));
-                return $"Su Nueva cantidad de {Nombre} es de {Cantida}";
+                DisminuirCantidadProducto(producto.Nombre, cantidad);
+                _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * Cantidad));
+                return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
 
 
 
@@ -190,12 +232,14 @@ namespace AtividadPosParcial.Test.Productos
     }
     internal class ProductoCompuesto : Producto
     {
-        public decimal Utilidad { get; private set; }
+
         public decimal Precio { get; private set; }
-        public List<Producto> Productos { get; private set; }
+        public decimal Utilidad { get => Cantidad * (Precio - Costo); }
+        public List<Producto> ProductosIngredientes { get; private set; }
+        public ProductoCompuesto() { }
         public ProductoCompuesto(string nombre, decimal precio, List<Producto> productos) : base(nombre, calcularCostos(productos), false)
         {
-            Productos = productos;
+            ProductosIngredientes = productos;
             Precio = precio;
         }
         private static decimal calcularCostos(List<Producto> productos)
@@ -212,49 +256,47 @@ namespace AtividadPosParcial.Test.Productos
         internal List<Producto> CrearProductoCompuesto(List<Producto> productos, List<int> cantidades)
         {
             List<Producto> productosTemporales = new List<Producto>();
-            Producto temporal;
-            for (int i = 0; i < productos.LongCount(); i++)
+            productosTemporales = productos;
+
+            for (int i = 0; i < productosTemporales.LongCount(); i++)
             {
-                temporal = productos[i];
-                temporal.Cantida = cantidades[i];
-                productosTemporales.Add(temporal);
+                productosTemporales[i].Cantidad = cantidades[i];
             }
-            Cantida++;
             return productosTemporales;
         }
 
 
 
-        internal string SalidadeProductosCompuesto(ProductoCompuesto producto, int cantidad, int huespede, List<Producto> ingredientes)
+        internal string SalidadeProductosCompuesto(ProductoCompuesto producto, int cantidad, int huespede)
         {
             if (cantidad >= 0)
             {
 
                 for (int i = 0; i < producto.Productos.LongCount(); i++)
                 {
-                    SalidadeProductos(this.Productos[i], ingredientes[i].Cantida);
+                    SalidadeProductos(this.ProductosIngredientes);
                 }
-                Cantida -= cantidad;
                 _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * cantidad));
-                return $"Su Nueva cantidad de {Nombre} es de {Cantida}";
-
-
-
+                Cantidad = cantidad;
+                return $"La utilidad de {Nombre} es de: {Utilidad:c2}";
             }
             throw new NotImplementedException();
         }
-        internal string SalidadeProductos(Producto producto, int cantidad)
+        internal string SalidadeProductos(List<Producto> productosUtilizados)
         {
-            if (cantidad >= 0)
+
+            for (int i = 0; i < productosUtilizados.LongCount(); i++)
             {
-
-                producto.Cantida -= cantidad;
-                return $"Su Nueva cantidad de {Nombre} es de {Cantida}";
-
-
+                DisminuirCantidadProductoCompuesto(productosUtilizados[i].Nombre, productosUtilizados[i].Cantidad, Cantidad);
 
             }
-            throw new NotImplementedException();
+            for (int i = 0; i < Productos.LongCount(); i++)
+            {
+                Console.WriteLine(Productos.ToList()[i].Cantidad);
+            }
+            return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
+
+            // throw new NotImplementedException();
         }
 
     }
