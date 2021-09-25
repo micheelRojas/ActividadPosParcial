@@ -282,7 +282,7 @@ namespace AtividadPosParcial.Test.Productos
             }
             throw new NotImplementedException();
         }
-        internal string SalidadeProductos(List<Producto> productosUtilizados)
+        internal void SalidadeProductos(List<Producto> productosUtilizados)
         {
 
             for (int i = 0; i < productosUtilizados.LongCount(); i++)
@@ -290,13 +290,7 @@ namespace AtividadPosParcial.Test.Productos
                 DisminuirCantidadProductoCompuesto(productosUtilizados[i].Nombre, productosUtilizados[i].Cantidad, Cantidad);
 
             }
-            for (int i = 0; i < Productos.LongCount(); i++)
-            {
-                Console.WriteLine(Productos.ToList()[i].Cantidad);
-            }
-            return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
 
-            // throw new NotImplementedException();
         }
 
     }
