@@ -181,7 +181,7 @@ namespace AtividadPosParcial.Test.Productos
         }
 
         public IReadOnlyCollection<VentaHuespede> VentaHuespedes => _ventaHuespede.AsReadOnly();
-        public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
+        public static IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
         internal virtual string EntradaProductos(Producto producto, int cantidad)
         {
 
@@ -277,13 +277,13 @@ namespace AtividadPosParcial.Test.Productos
         private static decimal calcularCostos(List<Ingrediente> ingredientes)
         {
             decimal sumaCostos = 0;
-            for (int i = 0; i < Productos.LongCount(); i++)
+            for (int i = 0; i <Producto.Productos.LongCount(); i++)
             {
                 for (int j = 0; j < ingredientes.LongCount(); j++)
                 {
-                    if (Productos.ToList()[i].Nombre.Equals(ingredientes[j].Nombre))
+                    if (Producto.Productos.ToList()[i].Nombre.Equals(ingredientes[j].Nombre))
                     {
-                        sumaCostos = sumaCostos + Productos.ToList()[i].Costo;
+                        sumaCostos = sumaCostos + Producto.Productos.ToList()[i].Costo;
                     }
                 }
 
@@ -326,13 +326,13 @@ namespace AtividadPosParcial.Test.Productos
         internal bool ValidarExistencia(ProductoCompuesto producto)
         {
             int validador = 0;
-            for (int i = 0; i < Productos.Count(); i++)
+            for (int i = 0; i < Producto.Productos.Count(); i++)
             {
                 for (int j = 0; j < producto.Ingredientes.Count(); j++)
                 {
-                    if (Productos.ToList()[i].Nombre.Equals(producto.Ingredientes[j].Nombre))
+                    if (Producto.Productos.ToList()[i].Nombre.Equals(producto.Ingredientes[j].Nombre))
                     {
-                        if (Productos.ToList()[i].Cantidad > producto.Ingredientes[j].Cantidad)
+                        if (Producto.Productos.ToList()[i].Cantidad > producto.Ingredientes[j].Cantidad)
                         {
                             validador++;
                         }
