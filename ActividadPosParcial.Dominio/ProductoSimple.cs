@@ -13,10 +13,8 @@ namespace ActividadPosParcial.Dominio
         public decimal Precio { get; private set; }
         public decimal Utilidad { get => Cantidad * (Precio - Costo); }
 
-
         public ProductoSimple(string nombre, decimal costo, decimal precio) : base(nombre, costo, true)
         {
-
             Precio = precio;
         }
 
@@ -28,8 +26,6 @@ namespace ActividadPosParcial.Dominio
                 DisminuirCantidadProducto(producto.Nombre, cantidad);
                 _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * Cantidad));
                 return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
-
-
 
             }
             throw new NotImplementedException();

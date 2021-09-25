@@ -12,11 +12,8 @@ namespace ActividadPosParcial.Dominio.Carpeta
         public decimal Costo { get; private set; }
         public bool VentaDirecta { get; private set; }
         public int Cantidad { get; set; }
-        private static List<Producto> _productos { get; set; }
 
         protected List<VentaHuespede> _ventaHuespede;
-
-        private List<Producto> listaAuxiliar;
 
 
         public Producto(string nombre, decimal costo, bool ventaDirecta)
@@ -25,21 +22,15 @@ namespace ActividadPosParcial.Dominio.Carpeta
             Costo = costo;
             VentaDirecta = ventaDirecta;
             _ventaHuespede = new List<VentaHuespede>();
-            _productos = new List<Producto>();
-            listaAuxiliar = new List<Producto>();
 
         }
 
-        public IReadOnlyCollection<VentaHuespede> VentaHuespedes => _ventaHuespede.AsReadOnly();
-        public static IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
         public virtual string EntradaProductos(Producto producto, int cantidad)
         {
 
             if (cantidad >= 0)
             {
                 producto.Cantidad += cantidad;
-                _productos.Add(producto);
-                listaAuxiliar.Add(producto);
                 Inventario.productos.Add(producto);
                 return $"Su Nueva cantidad de {Nombre} es de {producto.Cantidad}";
             }
@@ -47,17 +38,11 @@ namespace ActividadPosParcial.Dominio.Carpeta
             throw new NotImplementedException();
         }
 
-        public virtual List<Producto> retornarLista()
-        {
-
-            return listaAuxiliar;
-        }
-
         public virtual void DisminuirCantidadProducto(string nombre, int cantidad)
         {
             if (cantidad > 0)
             {
-                foreach (Producto producto in _productos)
+                foreach (Producto producto in Inventario.productos)
                 {
                     if (producto.Nombre.Equals(nombre))
                     {
@@ -77,7 +62,7 @@ namespace ActividadPosParcial.Dominio.Carpeta
 
             if (cantidad > 0 && cantidadPedido > 0)
             {
-                foreach (Producto producto in _productos.ToList())
+                foreach (Producto producto in Inventario.productos)
                 {
                     if (producto.Nombre.Equals(nombre))
                     {

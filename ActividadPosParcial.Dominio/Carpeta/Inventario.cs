@@ -8,12 +8,10 @@ namespace ActividadPosParcial.Dominio.Carpeta
 {
     public class Inventario
     {
-
         public static List<Producto> productos = new List<Producto>();
 
         public Inventario()
         {
-            //productos = new List<Producto>();
         }
 
 
