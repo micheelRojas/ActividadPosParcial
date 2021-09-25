@@ -28,7 +28,8 @@ namespace ActividadPosParcial.Dominio
                 return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
 
             }
-            throw new NotImplementedException();
+
+            return "La cantidad solicitada es incorrecta";
         }
 
     }

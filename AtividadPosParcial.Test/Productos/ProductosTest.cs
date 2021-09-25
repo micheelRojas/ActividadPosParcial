@@ -93,6 +93,38 @@ namespace AtividadPosParcial.Test.Productos
             #endregion
 
         }
+
+        /*
+         * HU1. SALIDA DE PRODUCTO (3.5)
+        COMO USUARIO QUIERO REGISTRAR LA SALIDA PRODUCTOS
+        CRITERIOS DE ACEPTACIÓN
+        1. La cantidad de la salida de debe ser mayor a 0
+         */
+        [Test]
+        public void NoPuedoRegistrarProductosdeSalidadSimple()
+        {
+
+            #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA DIRECTA, COMO SE TIENEN REGISTRADO 3 GASEOSAS 
+            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
+            var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000);
+            var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000);
+            int cantidadEntrada = 3;
+            producto.EntradaProductos(producto: producto, cantidad: cantidadEntrada);
+            yogur.EntradaProductos(producto: yogur, cantidad: cantidadEntrada);
+            agua.EntradaProductos(producto: agua, cantidad: cantidadEntrada);
+            #endregion
+            #region CUANDO se solicite la venta de -1 gaseosa por parte de un huespede
+            var huespede = 1055;
+            int cantidadSalida = -1;
+            string respuesta = producto.SalidadeProductosSimple(producto: producto, cantidad: cantidadSalida, huespede: huespede);
+            #endregion
+            #region ENTONCES  el sistema no registrara la salida del producto en el inventario y mostrará un mensaje "La cantidad solicitada es incorrecta"
+
+            Assert.AreEqual("La cantidad solicitada es incorrecta", respuesta);
+            #endregion
+
+        }
+
         /*
          * HU1. SALIDA DE PRODUCTO (3.5)
         COMO USUARIO QUIERO REGISTRAR LA SALIDA PRODUCTOS
