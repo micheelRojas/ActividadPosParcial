@@ -11,7 +11,7 @@ namespace ActividadPosParcial.Dominio.Carpeta
         public string Nombre { get; private set; }
         public decimal Costo { get; private set; }
         public bool VentaDirecta { get; private set; }
-        public int Cantidad { get; set; }
+        public int Cantidad { get; private set; }
 
         protected List<VentaHuespede> _ventaHuespede;
 
@@ -36,6 +36,11 @@ namespace ActividadPosParcial.Dominio.Carpeta
             }
 
             throw new NotImplementedException();
+        }
+
+        public virtual void EstablecerCantidadProductoCompuesto(int cantidad)
+        {
+            Cantidad = cantidad;
         }
 
         public virtual void DisminuirCantidadProducto(string nombre, int cantidad)
