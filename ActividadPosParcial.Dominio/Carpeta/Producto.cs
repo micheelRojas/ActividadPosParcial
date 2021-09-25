@@ -35,7 +35,8 @@ namespace ActividadPosParcial.Dominio.Carpeta
                 return $"Su Nueva cantidad de {Nombre} es de {producto.Cantidad}";
             }
 
-            throw new NotImplementedException();
+            return "La cantidad debe ser mayor a 0";
+
         }
 
         public virtual void EstablecerCantidadProductoCompuesto(int cantidad)

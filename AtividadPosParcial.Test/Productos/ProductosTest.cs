@@ -32,6 +32,30 @@ namespace AtividadPosParcial.Test.Productos
             #endregion
 
         }
+
+        /*
+         HU1. ENTRADA DE PRODUCTO (1.5)
+        COMO USUARIO QUIERO REGISTRAR LA ENTRADA PRODUCTOS
+        CRITERIOS DE ACEPTACIÓN
+         1. La cantidad de la entrada de debe ser mayor a 0
+         */
+        [Test]
+        public void NoPuedoRegistrarProductosdeEntrada()
+        {
+
+            #region DADO EL RESTAURANTE TIENE PRODUCTO DE GASEODA DE LITRO CON UN PRECIO DE 5000 Y UN COSTO 2000 Y NO NECESITA PREPARACION
+            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
+            #endregion
+            #region CUANDO intente registrar -1 gaseosa
+            int cantidad = -1;
+            string respuesta = producto.EntradaProductos(producto: producto, cantidad: cantidad);
+            #endregion
+            #region ENTONCES  el sistema no registrara el producto en el inventario y presentará el mensaje "La cantidad debe ser mayor a 0" 
+            Assert.AreEqual("La cantidad debe ser mayor a 0", respuesta);
+            #endregion
+
+        }
+
         /*
          * HU1. SALIDA DE PRODUCTO (3.5)
         COMO USUARIO QUIERO REGISTRAR LA SALIDA PRODUCTOS
