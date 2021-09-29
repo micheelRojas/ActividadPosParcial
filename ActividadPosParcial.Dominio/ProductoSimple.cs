@@ -22,8 +22,7 @@ namespace ActividadPosParcial.Dominio
         {
             if (cantidad >= 0)
             {
-
-                DisminuirCantidadProducto(Nombre, cantidad);
+                DisminuirCantidadProducto(cantidad);
                 _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: Precio * Cantidad));
                 return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
 

@@ -44,21 +44,16 @@ namespace ActividadPosParcial.Dominio.Carpeta
             Cantidad += cantidad;
         }
 
-        public virtual void DisminuirCantidadProducto(string nombre, int cantidad)
+        public virtual void DisminuirCantidadProducto( int cantidad)
         {
             if (cantidad > 0)
             {
-                foreach (Producto producto in Inventario.productos)
-                {
-                    if (producto.Nombre.Equals(nombre))
-                    {
-                        if (producto.Cantidad >= cantidad)
+                   
+                        if (Cantidad >= cantidad)
                         {
-                            producto.Cantidad -= cantidad;
+                            Cantidad -= cantidad;
                         }
-
-                    }
-                }
+  
             }
 
 

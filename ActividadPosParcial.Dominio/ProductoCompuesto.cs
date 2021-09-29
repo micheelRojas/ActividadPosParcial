@@ -59,11 +59,20 @@ namespace ActividadPosParcial.Dominio
         }
         public void SalidadeProductos(List<Ingrediente> ingredientes, int cantidad)
         {
-            for (int i = 0; i < ingredientes.LongCount(); i++)
+            for (int i = 0; i < Inventario.productos.Count; i++)
             {
-                DisminuirCantidadProducto(ingredientes[i].Nombre, ingredientes[i].Cantidad*cantidad);
+                for (int j = 0; j < ingredientes.LongCount(); j++)
+                {
 
+                    if (Inventario.productos[i].Nombre.Equals(ingredientes[j].Nombre))
+                    {
+                        Inventario.productos[i].DisminuirCantidadProducto(ingredientes[i].Cantidad * cantidad);
+
+                    }
+
+                }
             }
+            
         }
         public bool ValidarExistencia(ProductoCompuesto producto, int cantidad)
         {
