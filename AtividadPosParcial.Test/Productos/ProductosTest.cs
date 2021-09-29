@@ -25,7 +25,7 @@ namespace AtividadPosParcial.Test.Productos
             #endregion
             #region CUANDO registre 3 gaseosa
             int cantidad = 3;
-            string respuesta = producto.EntradaProductos(producto: producto, cantidad: cantidad);
+            string respuesta = producto.EntradaProductos( cantidad: cantidad);
             #endregion
             #region ENTONCES  el sistema registrara el producto en el inventario y adicionara la cantidad del mismo 
             Assert.AreEqual("Su Nueva cantidad de Gaseosa es de 3", respuesta);
@@ -48,7 +48,7 @@ namespace AtividadPosParcial.Test.Productos
             #endregion
             #region CUANDO intente registrar -1 gaseosa
             int cantidad = -1;
-            string respuesta = producto.EntradaProductos(producto: producto, cantidad: cantidad);
+            string respuesta = producto.EntradaProductos( cantidad: cantidad);
             #endregion
             #region ENTONCES  el sistema no registrara el producto en el inventario y presentará el mensaje "La cantidad debe ser mayor a 0" 
             Assert.AreEqual("La cantidad debe ser mayor a 0", respuesta);
@@ -78,9 +78,9 @@ namespace AtividadPosParcial.Test.Productos
             var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000);
             var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000);
             int cantidadEntrada = 3;
-            producto.EntradaProductos(producto: producto, cantidad: cantidadEntrada);
-            yogur.EntradaProductos(producto: yogur, cantidad: cantidadEntrada);
-            agua.EntradaProductos(producto: agua, cantidad: cantidadEntrada);
+            producto.EntradaProductos( cantidad: cantidadEntrada);
+            yogur.EntradaProductos(cantidad: cantidadEntrada);
+            agua.EntradaProductos( cantidad: cantidadEntrada);
             #endregion
             #region CUANDO se solicited la venta de 2 gaseosa por parte de un huespede
             var huespede = 1055;
@@ -109,9 +109,9 @@ namespace AtividadPosParcial.Test.Productos
             var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000);
             var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000);
             int cantidadEntrada = 3;
-            producto.EntradaProductos(producto: producto, cantidad: cantidadEntrada);
-            yogur.EntradaProductos(producto: yogur, cantidad: cantidadEntrada);
-            agua.EntradaProductos(producto: agua, cantidad: cantidadEntrada);
+            producto.EntradaProductos( cantidad: cantidadEntrada);
+            yogur.EntradaProductos( cantidad: cantidadEntrada);
+            agua.EntradaProductos( cantidad: cantidadEntrada);
             #endregion
             #region CUANDO se solicite la venta de -1 gaseosa por parte de un huespede
             var huespede = 1055;
@@ -149,9 +149,9 @@ namespace AtividadPosParcial.Test.Productos
             var salchicha = new Producto(nombre: "PanPerro", costo: 1000, ventaDirecta: false);
             var laminadequeso = new Producto(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false);
             int cantidadEntrada = 3;
-            panPerro.EntradaProductos(producto: laminadequeso, cantidad: cantidadEntrada);
-            salchicha.EntradaProductos(producto: panPerro, cantidad: cantidadEntrada);
-            laminadequeso.EntradaProductos(producto: salchicha, cantidad: cantidadEntrada);
+            panPerro.EntradaProductos( cantidad: cantidadEntrada);
+            salchicha.EntradaProductos(cantidad: cantidadEntrada);
+            laminadequeso.EntradaProductos( cantidad: cantidadEntrada);
             List<Ingrediente> ingredientesPerro = new List<Ingrediente>();
             ingredientesPerro.Add(new Ingrediente(panPerro.Nombre, 1));
             ingredientesPerro.Add(new Ingrediente(salchicha.Nombre, 1));
@@ -183,9 +183,9 @@ namespace AtividadPosParcial.Test.Productos
             var salchicha = new Producto(nombre: "PanPerro", costo: 1000, ventaDirecta: false);
             var laminadequeso = new Producto(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false);
             int cantidadEntrada = 1;
-            panPerro.EntradaProductos(producto: laminadequeso, cantidad: cantidadEntrada);
-            salchicha.EntradaProductos(producto: panPerro, cantidad: cantidadEntrada);
-            laminadequeso.EntradaProductos(producto: salchicha, cantidad: cantidadEntrada);
+            panPerro.EntradaProductos( cantidad: cantidadEntrada);
+            salchicha.EntradaProductos( cantidad: cantidadEntrada);
+            laminadequeso.EntradaProductos( cantidad: cantidadEntrada);
             List<Ingrediente> ingredientesPerro = new List<Ingrediente>();
             ingredientesPerro.Add(new Ingrediente(panPerro.Nombre, 1));
             ingredientesPerro.Add(new Ingrediente(salchicha.Nombre, 1));

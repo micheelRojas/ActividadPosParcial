@@ -25,14 +25,14 @@ namespace ActividadPosParcial.Dominio.Carpeta
 
         }
 
-        public virtual string EntradaProductos(Producto producto, int cantidad)
+        public virtual string EntradaProductos( int cantidad)
         {
 
             if (cantidad >= 0)
             {
-                producto.Cantidad += cantidad;
-                Inventario.productos.Add(producto);
-                return $"Su Nueva cantidad de {Nombre} es de {producto.Cantidad}";
+                Cantidad += cantidad;
+                Inventario.productos.Add(this);
+                return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
             }
 
             return "La cantidad debe ser mayor a 0";
