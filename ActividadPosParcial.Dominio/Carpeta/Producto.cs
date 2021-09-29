@@ -39,9 +39,9 @@ namespace ActividadPosParcial.Dominio.Carpeta
 
         }
 
-        public virtual void EstablecerCantidadProductoCompuesto(int cantidad)
+        public virtual void AumentarCantidadProducto(int cantidad)
         {
-            Cantidad = cantidad;
+            Cantidad += cantidad;
         }
 
         public virtual void DisminuirCantidadProducto(string nombre, int cantidad)
@@ -63,24 +63,6 @@ namespace ActividadPosParcial.Dominio.Carpeta
 
 
         }
-        public virtual void DisminuirCantidadProductoCompuesto(string nombre, int cantidad, int cantidadPedido)
-        {
-
-            if (cantidad > 0 && cantidadPedido > 0)
-            {
-                foreach (Producto producto in Inventario.productos)
-                {
-                    if (producto.Nombre.Equals(nombre))
-                    {
-                        if (producto.Cantidad >= (cantidad * cantidadPedido))
-                        {
-                            producto.Cantidad -= (cantidad * cantidadPedido);
-
-                        }
-                    }
-                }
-            }
-
-        }
+        
     }
 }

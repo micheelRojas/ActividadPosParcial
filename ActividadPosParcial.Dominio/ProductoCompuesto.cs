@@ -46,7 +46,7 @@ namespace ActividadPosParcial.Dominio
                 if (validacion)
                 {
                     _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: Precio * cantidad));
-                    EstablecerCantidadProductoCompuesto(cantidad);
+                    AumentarCantidadProducto(cantidad);
                     return $"La utilidad de {Nombre} es de: {Utilidad}";
                 }
                 if (!validacion)
@@ -61,7 +61,7 @@ namespace ActividadPosParcial.Dominio
         {
             for (int i = 0; i < ingredientes.LongCount(); i++)
             {
-                DisminuirCantidadProductoCompuesto(ingredientes[i].Nombre, ingredientes[i].Cantidad, cantidad);
+                DisminuirCantidadProducto(ingredientes[i].Nombre, ingredientes[i].Cantidad*cantidad);
 
             }
         }
