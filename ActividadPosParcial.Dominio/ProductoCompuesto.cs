@@ -38,7 +38,7 @@ namespace ActividadPosParcial.Dominio
 
 
 
-        public string SalidadeProductosCompuesto( int cantidad, int huespede)
+        public override string SalidadeProductos( int cantidad, int huespede)
         {
             if (cantidad >= 0)
             {
@@ -47,7 +47,7 @@ namespace ActividadPosParcial.Dominio
                 {
                     _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: Precio * cantidad));
                     AumentarCantidadProducto(cantidad);
-                    SalidadeProductos(Ingredientes,cantidad);
+                    SalidadeProductosdelProductoCompuesto(Ingredientes,cantidad);
                     return $"La utilidad de {Nombre} es de: {Utilidad}";
                 }
                 if (!validacion)
@@ -58,7 +58,7 @@ namespace ActividadPosParcial.Dominio
             }
             throw new NotImplementedException();
         }
-        public void SalidadeProductos(List<Ingrediente> ingredientes, int cantidad)
+        public void SalidadeProductosdelProductoCompuesto(List<Ingrediente> ingredientes, int cantidad)
         {
             for (int i = 0; i < Inventario.productos.Count; i++)
             {

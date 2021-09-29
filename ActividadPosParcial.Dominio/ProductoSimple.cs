@@ -13,12 +13,12 @@ namespace ActividadPosParcial.Dominio
         public decimal Precio { get; private set; }
         public decimal Utilidad { get => Cantidad * (Precio - Costo); }
 
-        public ProductoSimple(string nombre, decimal costo, decimal precio) : base(nombre, costo, true)
+        public ProductoSimple(string nombre, decimal costo, decimal precio, bool ventaDirecta) : base(nombre, costo, ventaDirecta)
         {
             Precio = precio;
         }
 
-        public string SalidadeProductosSimple( int cantidad, int huespede)
+        public override string SalidadeProductos( int cantidad, int huespede)
         {
             if (cantidad >= 0)
             {
@@ -31,5 +31,6 @@ namespace ActividadPosParcial.Dominio
             return "La cantidad solicitada es incorrecta";
         }
 
+        
     }
 }

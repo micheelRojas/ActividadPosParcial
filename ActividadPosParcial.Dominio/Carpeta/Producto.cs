@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ActividadPosParcial.Dominio.Carpeta
 {
-    public class Producto
+    public abstract class Producto
     {
         public string Nombre { get; private set; }
         public decimal Costo { get; private set; }
@@ -38,6 +38,7 @@ namespace ActividadPosParcial.Dominio.Carpeta
             return "La cantidad debe ser mayor a 0";
 
         }
+        public abstract string SalidadeProductos(int cantidad, int huespede);
 
         public virtual void AumentarCantidadProducto(int cantidad)
         {

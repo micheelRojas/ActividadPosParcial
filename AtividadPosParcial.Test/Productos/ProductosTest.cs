@@ -21,7 +21,7 @@ namespace AtividadPosParcial.Test.Productos
         {
 
             #region DADO EL RESTAURANTE TIENE PRODUCTO DE GASEODA DE LITRO CON UN PRECIO DE 5000 Y UN COSTO 2000 Y NO NECESITA PREPARACION
-            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
+            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000, ventaDirecta:true);
             #endregion
             #region CUANDO registre 3 gaseosa
             int cantidad = 3;
@@ -44,7 +44,7 @@ namespace AtividadPosParcial.Test.Productos
         {
 
             #region DADO EL RESTAURANTE TIENE PRODUCTO DE GASEODA DE LITRO CON UN PRECIO DE 5000 Y UN COSTO 2000 Y NO NECESITA PREPARACION
-            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
+            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000,ventaDirecta:true);
             #endregion
             #region CUANDO intente registrar -1 gaseosa
             int cantidad = -1;
@@ -74,9 +74,9 @@ namespace AtividadPosParcial.Test.Productos
         {
 
             #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA DIRECTA,COMO SE TIENEN REGISTRADO 3 GASEOSAS 
-            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
-            var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000);
-            var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000);
+            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000,ventaDirecta:true);
+            var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000, ventaDirecta:true);
+            var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000,ventaDirecta:true);
             int cantidadEntrada = 3;
             producto.EntradaProductos( cantidad: cantidadEntrada);
             yogur.EntradaProductos(cantidad: cantidadEntrada);
@@ -85,7 +85,7 @@ namespace AtividadPosParcial.Test.Productos
             #region CUANDO se solicited la venta de 2 gaseosa por parte de un huespede
             var huespede = 1055;
             int cantidadSalida = 2;
-            string respuesta = producto.SalidadeProductosSimple(cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = producto.SalidadeProductos(cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES  el sistema registrara la salida del producto en el inventario y disminuira la cantidad del mismo y mostrar un mensaje "Su Nueva cantidad de Gaseosa es de 1"
 
@@ -105,9 +105,9 @@ namespace AtividadPosParcial.Test.Productos
         {
 
             #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA DIRECTA, COMO SE TIENEN REGISTRADO 3 GASEOSAS 
-            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000);
-            var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000);
-            var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000);
+            var producto = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000,ventaDirecta:true);
+            var yogur = new ProductoSimple(nombre: "Yogur", costo: 1000, precio: 3000,ventaDirecta:true);
+            var agua = new ProductoSimple(nombre: "Agua", costo: 1000, precio: 2000,ventaDirecta:true);
             int cantidadEntrada = 3;
             producto.EntradaProductos( cantidad: cantidadEntrada);
             yogur.EntradaProductos( cantidad: cantidadEntrada);
@@ -116,7 +116,7 @@ namespace AtividadPosParcial.Test.Productos
             #region CUANDO se solicite la venta de -1 gaseosa por parte de un huespede
             var huespede = 1055;
             int cantidadSalida = -1;
-            string respuesta = producto.SalidadeProductosSimple(cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = producto.SalidadeProductos(cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES  el sistema no registrara la salida del producto en el inventario y mostrará un mensaje "La cantidad solicitada es incorrecta"
 
@@ -145,9 +145,9 @@ namespace AtividadPosParcial.Test.Productos
              */
 
             #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA INDIRECTA Que nesecitan transfotmacion 
-            var panPerro = new Producto(nombre: "Salchica", costo: 1000, ventaDirecta: false);
-            var salchicha = new Producto(nombre: "PanPerro", costo: 1000, ventaDirecta: false);
-            var laminadequeso = new Producto(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false);
+            var panPerro = new ProductoSimple(nombre: "Salchica", costo: 1000, ventaDirecta: false, precio: 0);
+            var salchicha = new ProductoSimple(nombre: "PanPerro", costo: 1000, ventaDirecta: false, precio:0);
+            var laminadequeso = new ProductoSimple(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false, precio: 0);
             int cantidadEntrada = 3;
             panPerro.EntradaProductos( cantidad: cantidadEntrada);
             salchicha.EntradaProductos(cantidad: cantidadEntrada);
@@ -162,7 +162,7 @@ namespace AtividadPosParcial.Test.Productos
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
 
             int cantidadSalida = 3;
-            string respuesta = perroSencillo.SalidadeProductosCompuesto( cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = perroSencillo.SalidadeProductos( cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente y se mostrara el mensaje utilidad  La utilidad de PerroSencillo es de: $ 6.000,00
             Assert.AreEqual($"La utilidad de PerroSencillo es de: 6000", respuesta);
@@ -177,11 +177,11 @@ namespace AtividadPosParcial.Test.Productos
             precio: 5.000. costo: calculado: 3.000, utilidad: precio - costo
              */
 
-            #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA INDIRECTA Que nesecitan transfotmacion si solo se tiene 3 de cada uno de productos
+            #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA INDIRECTA Que nesecitan transfotmacion si solo se tiene 4 de cada uno de productos
 
-            var panPerro = new Producto(nombre: "Salchica", costo: 1000, ventaDirecta: false);
-            var salchicha = new Producto(nombre: "PanPerro", costo: 1000, ventaDirecta: false);
-            var laminadequeso = new Producto(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false);
+            var panPerro = new ProductoSimple (nombre: "Salchica", costo: 1000, ventaDirecta: false,precio:0);
+            var salchicha = new ProductoSimple(nombre: "PanPerro", costo: 1000, ventaDirecta: false,precio:0);
+            var laminadequeso = new ProductoSimple(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false, precio: 0);
             int cantidadEntrada = 1;
             panPerro.EntradaProductos( cantidad: cantidadEntrada);
             salchicha.EntradaProductos( cantidad: cantidadEntrada);
@@ -196,7 +196,7 @@ namespace AtividadPosParcial.Test.Productos
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
 
             int cantidadSalida = 5;
-            string respuesta = perroSencillo.SalidadeProductosCompuesto( cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = perroSencillo.SalidadeProductos( cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES  se mostrara el mensaje   "No existe la Cantidad de productos suficientes para la venta"
             Assert.AreEqual($"No existe la Cantidad de productos suficientes para la venta", respuesta);
