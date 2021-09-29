@@ -38,14 +38,14 @@ namespace ActividadPosParcial.Dominio
 
 
 
-        public string SalidadeProductosCompuesto(ProductoCompuesto producto, int cantidad, int huespede)
+        public string SalidadeProductosCompuesto( int cantidad, int huespede)
         {
             if (cantidad >= 0)
             {
-                var validacion = ValidarExistencia(producto, cantidad);
+                var validacion = ValidarExistencia(this, cantidad);
                 if (validacion)
                 {
-                    _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * cantidad));
+                    _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: Precio * cantidad));
                     EstablecerCantidadProductoCompuesto(cantidad);
                     return $"La utilidad de {Nombre} es de: {Utilidad}";
                 }

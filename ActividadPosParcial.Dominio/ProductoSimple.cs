@@ -18,13 +18,13 @@ namespace ActividadPosParcial.Dominio
             Precio = precio;
         }
 
-        public string SalidadeProductosSimple(ProductoSimple producto, int cantidad, int huespede)
+        public string SalidadeProductosSimple( int cantidad, int huespede)
         {
             if (cantidad >= 0)
             {
 
-                DisminuirCantidadProducto(producto.Nombre, cantidad);
-                _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: producto.Precio * Cantidad));
+                DisminuirCantidadProducto(Nombre, cantidad);
+                _ventaHuespede.Add(new VentaHuespede(producto: this, huespede: huespede, venta: Precio * Cantidad));
                 return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
 
             }

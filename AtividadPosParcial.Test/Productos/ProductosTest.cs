@@ -85,7 +85,7 @@ namespace AtividadPosParcial.Test.Productos
             #region CUANDO se solicited la venta de 2 gaseosa por parte de un huespede
             var huespede = 1055;
             int cantidadSalida = 2;
-            string respuesta = producto.SalidadeProductosSimple(producto: producto, cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = producto.SalidadeProductosSimple(cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES  el sistema registrara la salida del producto en el inventario y disminuira la cantidad del mismo y mostrar un mensaje "Su Nueva cantidad de Gaseosa es de 1"
 
@@ -116,7 +116,7 @@ namespace AtividadPosParcial.Test.Productos
             #region CUANDO se solicite la venta de -1 gaseosa por parte de un huespede
             var huespede = 1055;
             int cantidadSalida = -1;
-            string respuesta = producto.SalidadeProductosSimple(producto: producto, cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = producto.SalidadeProductosSimple(cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES  el sistema no registrara la salida del producto en el inventario y mostrará un mensaje "La cantidad solicitada es incorrecta"
 
@@ -162,7 +162,7 @@ namespace AtividadPosParcial.Test.Productos
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
 
             int cantidadSalida = 3;
-            string respuesta = perroSencillo.SalidadeProductosCompuesto(producto: perroSencillo, cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = perroSencillo.SalidadeProductosCompuesto( cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente y se mostrara el mensaje utilidad  La utilidad de PerroSencillo es de: $ 6.000,00
             Assert.AreEqual($"La utilidad de PerroSencillo es de: 6000", respuesta);
@@ -196,7 +196,7 @@ namespace AtividadPosParcial.Test.Productos
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
 
             int cantidadSalida = 5;
-            string respuesta = perroSencillo.SalidadeProductosCompuesto(producto: perroSencillo, cantidad: cantidadSalida, huespede: huespede);
+            string respuesta = perroSencillo.SalidadeProductosCompuesto( cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES  se mostrara el mensaje   "No existe la Cantidad de productos suficientes para la venta"
             Assert.AreEqual($"No existe la Cantidad de productos suficientes para la venta", respuesta);
