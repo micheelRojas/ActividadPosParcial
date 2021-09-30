@@ -153,9 +153,9 @@ namespace ActividadPosParcial.Test.Productos
             salchicha.EntradaProductos(cantidad: cantidadEntrada);
             laminadequeso.EntradaProductos( cantidad: cantidadEntrada);
             List<Ingrediente> ingredientesPerro = new List<Ingrediente>();
-            ingredientesPerro.Add(new Ingrediente(panPerro.Nombre, 1));
-            ingredientesPerro.Add(new Ingrediente(salchicha.Nombre, 1));
-            ingredientesPerro.Add(new Ingrediente(laminadequeso.Nombre, 1));
+            ingredientesPerro.Add(new Ingrediente(panPerro, 1));
+            ingredientesPerro.Add(new Ingrediente(salchicha, 1));
+            ingredientesPerro.Add(new Ingrediente(laminadequeso, 1));
             var huespede = 1055;
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
 
@@ -189,9 +189,9 @@ namespace ActividadPosParcial.Test.Productos
             salchicha.EntradaProductos( cantidad: cantidadEntrada);
             laminadequeso.EntradaProductos( cantidad: cantidadEntrada);
             List<Ingrediente> ingredientesPerro = new List<Ingrediente>();
-            ingredientesPerro.Add(new Ingrediente(panPerro.Nombre, 1));
-            ingredientesPerro.Add(new Ingrediente(salchicha.Nombre, 1));
-            ingredientesPerro.Add(new Ingrediente(laminadequeso.Nombre, 1));
+            ingredientesPerro.Add(new Ingrediente(panPerro, 1));
+            ingredientesPerro.Add(new Ingrediente(salchicha, 1));
+            ingredientesPerro.Add(new Ingrediente(laminadequeso, 1));
             var huespede = 1055;
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
 
@@ -203,6 +203,47 @@ namespace ActividadPosParcial.Test.Productos
             #endregion
             #region ENTONCES  se mostrara el mensaje   "No existe la Cantidad de productos suficientes para la venta"
             Assert.AreEqual($"No existe la Cantidad de productos suficientes para la venta", respuesta);
+            #endregion
+
+        }
+        [Test]
+        public void PuedoRegistrarProductosdeSalidadCompuesta2()
+        {
+            /*
+                         * un perro sencillo (ingredientes: un pan para perros, una salchicha, una lámina de queso)
+            precio: 5.000. costo: calculado: 3.000, utilidad: precio - costo
+             */
+
+            #region DADO EL RESTAURANTE TIENE VENTA DE  PRODUCTOS DE VENTA INDIRECTA Que nesecitan transfotmacion 
+            var panPerro = new ProductoSimple(nombre: "Salchica", costo: 1000, ventaDirecta: false, precio: 0);
+            var salchicha = new ProductoSimple(nombre: "PanPerro", costo: 1000, ventaDirecta: false, precio: 0);
+            var laminadequeso = new ProductoSimple(nombre: "LaminaQueso", costo: 1000, ventaDirecta: false, precio: 0);
+            var gaseosa = new ProductoSimple(nombre: "Gaseosa", costo: 2000, precio: 5000, ventaDirecta: true);
+            int cantidadEntrada = 3;
+            panPerro.EntradaProductos(cantidad: cantidadEntrada);
+            salchicha.EntradaProductos(cantidad: cantidadEntrada);
+            laminadequeso.EntradaProductos(cantidad: cantidadEntrada);
+            gaseosa.EntradaProductos(cantidad: cantidadEntrada);
+            List<Ingrediente> ingredientesPerro = new List<Ingrediente>();
+            ingredientesPerro.Add(new Ingrediente(panPerro, 1));
+            ingredientesPerro.Add(new Ingrediente(salchicha, 1));
+            ingredientesPerro.Add(new Ingrediente(laminadequeso, 1));
+            var huespede = 1055;
+            var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
+
+            List<Ingrediente> ingredientesCombo = new List<Ingrediente>();
+            ingredientesCombo.Add(new Ingrediente(perroSencillo,2));
+            ingredientesCombo.Add(new Ingrediente(gaseosa,1));
+            var combo = new ProductoCompuesto(nombre:"Combo", precio:20000,ingredientes:ingredientesCombo);
+            #endregion
+            #region CUANDO se solicited la venta de tres perro Sencillos
+
+            int cantidadSalida = 1;
+            string respuesta = combo.SalidadeProductos(cantidad: cantidadSalida, huespede: huespede);
+            #endregion
+            #region ENTONCES la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente y se mostrara el mensaje utilidad  La utilidad de PerroSencillo es de: $ 6.000,00
+            Assert.AreEqual($"La utilidad de PerroSencillo es de: 6000", respuesta);
+            Assert.AreEqual(0, panPerro.Cantidad);
             #endregion
 
         }

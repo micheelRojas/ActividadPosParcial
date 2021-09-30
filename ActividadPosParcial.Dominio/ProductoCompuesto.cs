@@ -26,7 +26,7 @@ namespace ActividadPosParcial.Dominio
             {
                 for (int j = 0; j < ingredientes.LongCount(); j++)
                 {
-                    if (Inventario.productos.ToList()[i].Nombre.Equals(ingredientes[j].Nombre))
+                    if (Inventario.productos.ToList()[i].Nombre.Equals(ingredientes[j].Producto.Nombre))
                     {
                         sumaCostos = sumaCostos + Inventario.productos.ToList()[i].Costo;
                     }
@@ -65,7 +65,7 @@ namespace ActividadPosParcial.Dominio
                 for (int j = 0; j < ingredientes.Count(); j++)
                 {
 
-                    if (Inventario.productos[i].Nombre.Equals(ingredientes[j].Nombre))
+                    if (Inventario.productos[i].Nombre.Equals(ingredientes[j].Producto.Nombre))
                     {
                         Inventario.productos[i].DisminuirCantidadProducto(ingredientes[j].Cantidad * cantidad);
 
@@ -82,7 +82,7 @@ namespace ActividadPosParcial.Dominio
             {
                 for (int j = 0; j < producto.Ingredientes.Count(); j++)
                 {
-                    if (Inventario.productos[i].Nombre.Equals(producto.Ingredientes[j].Nombre))
+                    if (Inventario.productos[i].Nombre.Equals(producto.Ingredientes[j].Producto.Nombre))
                     {
                         if (Inventario.productos[i].Cantidad >= producto.Ingredientes[j].Cantidad * cantidad)
                         {
@@ -105,11 +105,11 @@ namespace ActividadPosParcial.Dominio
 
     public class Ingrediente
     {
-        public string Nombre { get; private set; }
+        public Producto Producto { get; private set; }
         public int Cantidad { get; private set; }
-        public Ingrediente(string nombre, int cantidad)
+        public Ingrediente(Producto producto, int cantidad)
         {
-            Nombre = nombre;
+            Producto = producto;
             Cantidad = cantidad;
         }
     }
