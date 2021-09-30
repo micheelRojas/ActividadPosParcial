@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AtividadPosParcial.Test.Productos
+namespace ActividadPosParcial.Test.Productos
 {
     class ProductosTest
     {
@@ -156,16 +156,18 @@ namespace AtividadPosParcial.Test.Productos
             ingredientesPerro.Add(new Ingrediente(panPerro.Nombre, 1));
             ingredientesPerro.Add(new Ingrediente(salchicha.Nombre, 1));
             ingredientesPerro.Add(new Ingrediente(laminadequeso.Nombre, 1));
-            #endregion
-            #region CUANDO se solicited la venta de tres perro Sencillos
             var huespede = 1055;
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
+
+            #endregion
+            #region CUANDO se solicited la venta de tres perro Sencillos
 
             int cantidadSalida = 3;
             string respuesta = perroSencillo.SalidadeProductos( cantidad: cantidadSalida, huespede: huespede);
             #endregion
             #region ENTONCES la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente y se mostrara el mensaje utilidad  La utilidad de PerroSencillo es de: $ 6.000,00
             Assert.AreEqual($"La utilidad de PerroSencillo es de: 6000", respuesta);
+            Assert.AreEqual(0, panPerro.Cantidad);
             #endregion
 
         }
@@ -190,10 +192,11 @@ namespace AtividadPosParcial.Test.Productos
             ingredientesPerro.Add(new Ingrediente(panPerro.Nombre, 1));
             ingredientesPerro.Add(new Ingrediente(salchicha.Nombre, 1));
             ingredientesPerro.Add(new Ingrediente(laminadequeso.Nombre, 1));
-            #endregion
-            #region CUANDO se solicited la venta de 5 perro Sencillos
             var huespede = 1055;
             var perroSencillo = new ProductoCompuesto(nombre: "PerroSencillo", precio: 5000, ingredientes: ingredientesPerro);
+
+            #endregion
+            #region CUANDO se solicited la venta de 5 perro Sencillos
 
             int cantidadSalida = 5;
             string respuesta = perroSencillo.SalidadeProductos( cantidad: cantidadSalida, huespede: huespede);
