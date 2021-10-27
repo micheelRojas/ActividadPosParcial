@@ -15,6 +15,7 @@ namespace ActividadPosParcial.Dominio.Carpeta
 
         protected List<VentaHuespede> _ventaHuespede;
 
+        Inventario inventario = Inventario.getInventario();
 
         public Producto(string nombre, decimal costo, bool ventaDirecta)
         {
@@ -31,7 +32,7 @@ namespace ActividadPosParcial.Dominio.Carpeta
             if (cantidad >= 0)
             {
                 Cantidad += cantidad;
-                Inventario.productos.Add(this);
+                inventario.productos.Add(this);
                 return $"Su Nueva cantidad de {Nombre} es de {Cantidad}";
             }
 

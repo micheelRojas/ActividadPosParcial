@@ -14,21 +14,25 @@ namespace ActividadPosParcial.Dominio
         public decimal Utilidad { get => Cantidad * (Precio - Costo); }
         public List<Ingrediente> Ingredientes { get; private set; }
 
+        static Inventario inventario = Inventario.getInventario();
+
         public ProductoCompuesto(string nombre, decimal precio, List<Ingrediente> ingredientes) : base(nombre, calcularCostos(ingredientes), false)
         {
             Ingredientes = ingredientes;
             Precio = precio;
         }
+
+
         private static decimal calcularCostos(List<Ingrediente> ingredientes)
         {
             decimal sumaCostos = 0;
-            for (int i = 0; i < Inventario.productos.LongCount(); i++)
+            for (int i = 0; i < inventario.productos.LongCount(); i++)
             {
                 for (int j = 0; j < ingredientes.LongCount(); j++)
                 {
-                    if (Inventario.productos.ToList()[i].Nombre.Equals(ingredientes[j].Producto.Nombre))
+                    if (inventario.productos.ToList()[i].Nombre.Equals(ingredientes[j].Producto.Nombre))
                     {
-                        sumaCostos = sumaCostos + Inventario.productos.ToList()[i].Costo;
+                        sumaCostos = sumaCostos + inventario.productos.ToList()[i].Costo;
                     }
                 }
 
@@ -60,14 +64,14 @@ namespace ActividadPosParcial.Dominio
         }
         public void SalidadeProductosdelProductoCompuesto(List<Ingrediente> ingredientes, int cantidad)
         {
-            for (int i = 0; i < Inventario.productos.Count; i++)
+            for (int i = 0; i < inventario.productos.Count; i++)
             {
                 for (int j = 0; j < ingredientes.Count(); j++)
                 {
 
-                    if (Inventario.productos[i].Nombre.Equals(ingredientes[j].Producto.Nombre))
+                    if (inventario.productos[i].Nombre.Equals(ingredientes[j].Producto.Nombre))
                     {
-                        Inventario.productos[i].DisminuirCantidadProducto(ingredientes[j].Cantidad * cantidad);
+                        inventario.productos[i].DisminuirCantidadProducto(ingredientes[j].Cantidad * cantidad);
 
                     }
 
@@ -78,13 +82,13 @@ namespace ActividadPosParcial.Dominio
         public bool ValidarExistencia(ProductoCompuesto producto, int cantidad)
         {
             int validador = 0;
-            for (int i = 0; i < Inventario.productos.Count(); i++)
+            for (int i = 0; i < inventario.productos.Count(); i++)
             {
                 for (int j = 0; j < producto.Ingredientes.Count(); j++)
                 {
-                    if (Inventario.productos[i].Nombre.Equals(producto.Ingredientes[j].Producto.Nombre))
+                    if (inventario.productos[i].Nombre.Equals(producto.Ingredientes[j].Producto.Nombre))
                     {
-                        if (Inventario.productos[i].Cantidad >= producto.Ingredientes[j].Cantidad * cantidad)
+                        if (inventario.productos[i].Cantidad >= producto.Ingredientes[j].Cantidad * cantidad)
                         {
                             validador++;
                         }
